@@ -2058,6 +2058,29 @@ namespace Advent
                 curr = sum;
             }
 
+            // Part 2 alt
+
+            var result3 = 0;
+            first = true;
+            curr = 0;
+
+            for ( var i = 0; i <= nums.Length - WIN_SIZE; i ++ )
+            {
+                var num = nums[i];
+
+                if ( first ) {
+                    first = false;
+                } else {
+                    if ( nums[i+2] > curr ) result3 ++;
+                }
+
+                curr = num;
+            }
+
+            if ( result2 != result3 ) {
+                Console.WriteLine( $"ERROR: {result3} does not agree with correct value {result2}" );
+            }
+
             return ( result1, result2 ) ;
         }
     }
