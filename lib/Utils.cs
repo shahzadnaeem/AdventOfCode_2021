@@ -1,10 +1,11 @@
-namespace Advent
+namespace Advent2021
 {
     class Utils
     {
         public static void White() { Console.ForegroundColor = ConsoleColor.White; }
         public static void Red() { Console.ForegroundColor = ConsoleColor.Red; }
         public static void Green() { Console.ForegroundColor = ConsoleColor.Green; }
+        public static void Yellow() { Console.ForegroundColor = ConsoleColor.Yellow; }
 
         public static void WriteLineStringArray(string[] items)
         {
@@ -28,10 +29,16 @@ namespace Advent
             Utils.White();
         }
 
-        public static void Result(string day, string result)
+
+        public static void Day( int day )
         {
             Utils.Green();
-            Console.WriteLine(day);
+            Console.WriteLine( $"\nDay {day}");
+            Utils.Yellow();
+        }
+
+        public static void Result(string result)
+        {
             Utils.White();
             Console.WriteLine(result);
         }
