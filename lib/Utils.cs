@@ -24,8 +24,10 @@ namespace Advent2021
 
         public static void Title(string title)
         {
+            Console.WriteLine("\n");
             Utils.Red();
             Console.WriteLine(title);
+            Console.WriteLine( new string( '=', title.Length ) );
             Utils.White();
         }
 
