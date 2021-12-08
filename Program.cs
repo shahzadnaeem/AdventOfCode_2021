@@ -10,3 +10,6 @@ Utils.Result( $"Answer = {new Day2().Answer().ToString()}" );
 
 Utils.Day( 3 );
 Utils.Result( $"Answer = {new Day3().Answer().ToString()}" );
+
+Utils.Day( 4 );
+Utils.Result( $"Answer = {new Day4().Answer().ToString()}" );
