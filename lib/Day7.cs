@@ -1,8 +1,8 @@
 namespace Advent2021
 {
-    class DayN
+    class Day7
     {
-        public DayN()
+        public Day7()
         {
         }
 

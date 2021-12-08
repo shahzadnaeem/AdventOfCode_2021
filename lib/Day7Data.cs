@@ -1,6 +1,6 @@
 namespace Advent2021
 {
-    class DayNData
+    class Day7Data
     {
         public const string INPUT = @"
 ";
