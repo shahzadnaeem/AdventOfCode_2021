@@ -17,3 +17,5 @@ Utils.Result( $"Answer = {new Day4().Answer().ToString()}" );
 Utils.Day( 5 );
 Utils.Result( $"Answer = {new Day5().Answer().ToString()}" );
 
+Utils.Day( 6 );
+Utils.Result( $"Answer = {new Day6().Answer().ToString()}" );
