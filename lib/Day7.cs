@@ -2,32 +2,114 @@ namespace Advent2021
 {
     class Day7
     {
+        public class Crabs
+        {
+            public Dictionary<int,int> Data = new Dictionary<int, int>();
+
+            public Crabs() {}
+
+            public void Init( int[] data )
+            {
+                Data = new Dictionary<int, int>();
+
+                foreach ( var d in data ) {
+                    if ( !Data.ContainsKey(d) ) {
+                        Data[d] = 1;
+                    } else {
+                        Data[d]++;
+                    }
+                }
+            }
+
+            public int MaxPos()
+            {
+                return Data.Keys.Max();
+            }
+
+            public int SumTo( int n )
+            {
+                return n * ( n + 1 ) / 2;
+            }
+
+            public int FuelTo( int pos, bool expensive = false )
+            {
+                int fuelTo = 0;
+
+                foreach ( var k in Data.Keys )
+                {
+                    var dist = Math.Abs( pos - k );
+                    var cost = expensive ? SumTo( dist ) : Math.Abs( dist );
+
+                    // Console.WriteLine( $"{k} to {pos}: {cost} * {Data[k]}" );
+
+                    fuelTo += ( cost * Data[k] );
+                }
+
+                // Console.WriteLine( $"Total cost to {pos}: {fuelTo}\n" );
+
+                return fuelTo;
+            }
+        }
+
+
         public Day7()
         {
         }
 
+        public int[] GetData()
+        {
+            return Day7Data.INPUT.Split(',')
+                .Select( d => Convert.ToInt32( d ) )
+                .ToArray();
+        }
+
         public ( int, int ) Answer()
         {
-            var inputs = DayNData.INPUT.Split( '\n' );
+            var data = GetData();
 
-            var parsed = inputs.Select( ( d, i ) => {
+            Console.WriteLine( $"#Data items = {data.Length}" );
 
-                // Do whatever parsing is needed here
+            var crabs = new Crabs();
 
-                // Tuple example output
-                return ( 1, 2 );
-            }).ToArray();
-
-            Console.WriteLine( $"Parsed inputs = {parsed.Length}" );
+            crabs.Init( data );
 
             // Part 1
+            var bestPos = 0;
+            var bestFuel = 0;
 
-            var result1 = ( 0, 0 );
+            var maxPos = crabs.MaxPos();
+
+            Console.WriteLine( $"  Max pos = {maxPos}" );
+
+            for ( var pos = 0; pos <= maxPos; pos ++ )
+            {
+                var fuelTo = crabs.FuelTo( pos );
+
+                if ( pos == 0 || fuelTo < bestFuel ) {
+                    bestPos = pos;
+                    bestFuel = fuelTo;
+                }
+            }
+
+            var result1 = ( bestPos, bestFuel );
 
             Console.WriteLine( $"Result1 = {result1}" );
 
             // Part 2
-            var result2 = ( 0, 0 );
+            bestPos = 0;
+            bestFuel = 0;
+
+            for ( var pos = 0; pos <= maxPos; pos ++ )
+            {
+                var fuelTo = crabs.FuelTo( pos, true );
+
+                if ( pos == 0 || fuelTo < bestFuel ) {
+                    bestPos = pos;
+                    bestFuel = fuelTo;
+                }
+            }
+
+            var result2 = ( bestPos, bestFuel );
 
             Console.WriteLine( $"Result2 = {result2}" );
 
