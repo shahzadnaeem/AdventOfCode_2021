@@ -22,3 +22,6 @@ Utils.Result( $"Answer = {new Day6().Answer().ToString()}" );
 
 Utils.Day( 7 );
 Utils.Result( $"Answer = {new Day7().Answer().ToString()}" );
+
+Utils.Day( 8 );
+Utils.Result( $"Answer = {new Day8().Answer().ToString()}" );

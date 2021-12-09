@@ -7,19 +7,24 @@ namespace Advent2021
         public static void Green() { Console.ForegroundColor = ConsoleColor.Green; }
         public static void Yellow() { Console.ForegroundColor = ConsoleColor.Yellow; }
 
-        public static void WriteLineStringArray(string[] items)
+        public static string ArrayToString<T>( T[] items )
         {
-            var num = 0;
-            Console.Write("[");
-            foreach (var s in items)
+            var wr = new StringWriter();
+
+            var c = items.Length;
+
+            wr.Write( "[ " );
+
+            foreach (var item in items)
             {
-                Console.Write($"{s}");
-                if (++num != items.Length)
-                {
-                    Console.Write(",");
-                }
+                wr.Write( $"{item}" );
+                c--;
+                if ( c > 0 ) wr.Write(',');
             }
-            Console.WriteLine("]");
+
+            wr.Write( " ]" );
+
+            return wr.ToString();
         }
 
         public static void Title(string title)
