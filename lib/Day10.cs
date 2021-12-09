@@ -1,16 +1,17 @@
 namespace Advent2021
 {
-    class DayN
+    class Day10
     {
-        public DayN()
+        public Day10()
         {
         }
 
         public ( int, int ) Answer()
         {
-            Console.WriteLine( $"INPUT = {DayNData.INPUT}" );
+            Console.WriteLine( $"INPUT = {Day10Data.INPUT}" );
 
             // Part 1
+
             var result1 = ( 0, 0 );
 
             Console.WriteLine( $"Result1 = {result1}" );

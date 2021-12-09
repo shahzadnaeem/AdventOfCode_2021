@@ -1,6 +1,8 @@
 ﻿using Advent2021;
 
-Utils.Title( "Advent of Code 2021" );
+var day = DateTime.Now.Day;
+
+Utils.Title( $"Advent of Code 2021 - Day {day}" );
 
 Utils.Day( 1 );
 Utils.Result( $"Answer = {new Day1().Answer().ToString()}" );
@@ -28,3 +30,6 @@ Utils.Result( $"Answer = {new Day8().Answer().ToString()}" );
 
 Utils.Day( 9 );
 Utils.Result( $"Answer = {new Day9().Answer().ToString()}" );
+
+Utils.Day( 10 );
+Utils.Result( $"Answer = {new Day10().Answer().ToString()}" );

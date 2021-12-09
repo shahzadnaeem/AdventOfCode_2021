@@ -39,6 +39,13 @@ namespace Advent2021
 
         public static void Day( int day )
         {
+            var adventDay = DateTime.Now.Day;
+            var live = DateTime.Now.Month == 12 && DateTime.Now.Year == 2021;
+
+            if ( live && adventDay == day ) {
+                Title( $"👍 Today is Day {day} 👍" );
+            }
+
             Utils.Green();
             Console.WriteLine( $"\nDay {day}");
             Utils.Yellow();
