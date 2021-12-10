@@ -206,7 +206,7 @@ namespace Advent2021
                 if ( line.P2.Y > maxX ) maxY = line.P2.Y;
 
                 if ( numLines < 10 ) {
-                    Console.WriteLine( $"Line #{numLines}: {line}" );
+                    // Console.WriteLine( $"Line #{numLines}: {line}" );
                 }
 
                 return line;
@@ -228,7 +228,7 @@ namespace Advent2021
 
             var numCrossedLines = oceanFloor.NumCrossedLines();
 
-            Console.WriteLine( $"{oceanFloor}" );
+            // Console.WriteLine( $"{oceanFloor}" );
 
             Console.WriteLine( $"Number of crossed lines: {oceanFloor.NumCrossedLines()}" );
 
@@ -249,7 +249,7 @@ namespace Advent2021
 
             numCrossedLines = oceanFloor.NumCrossedLines();
 
-            Console.WriteLine( $"{oceanFloor}" );
+            // Console.WriteLine( $"{oceanFloor}" );
 
             Console.WriteLine( $"Number of crossed lines: {oceanFloor.NumCrossedLines()}" );
 

@@ -137,7 +137,7 @@ namespace Advent2021
 
             }).ToArray();
 
-            Console.WriteLine( $"Parsed inputs = {parsed.Length}" );
+            // Console.WriteLine( $"Parsed inputs = {parsed.Length}" );
 
             var fishes = new List<LanternFish>();
 
@@ -153,7 +153,7 @@ namespace Advent2021
             var fishes = GetFishes( inputs );
 
             // Part 1
-            ShowFishes( fishes );
+            // ShowFishes( fishes );
 
             var newFishes = IterateDays( fishes, 80 );
 
@@ -171,7 +171,7 @@ namespace Advent2021
 
             tank.Init( fishes );
 
-            Console.WriteLine( $"{tank}" );
+            // Console.WriteLine( $"{tank}" );
 
             Console.WriteLine( $"#Fishes in tank = {tank.NumFishes()}" );
 
