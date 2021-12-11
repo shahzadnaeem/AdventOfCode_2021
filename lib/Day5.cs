@@ -20,6 +20,7 @@ namespace Advent2021
                 return $"{X},{Y}";
             }
         }
+
         public class Line
         {
             public Point P1 { get; set; }

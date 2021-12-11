@@ -22,14 +22,14 @@ namespace Advent2021
         {
         }
 
-        private Input GetInput()
+        private Input GetData()
         {
             return new Input( DayNData.INPUT );
         }
 
         public ( long, long ) Answer()
         {
-            var input = GetInput();
+            var input = GetData();
 
 
             Console.WriteLine( $"INPUT = ${input}" );

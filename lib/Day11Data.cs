@@ -2,7 +2,7 @@ namespace Advent2021
 {
     class Day11Data
     {
-        public const string INPUT = @"5483143223
+        public const string INPUT0 = @"5483143223
 2745854711
 5264556173
 6141336146
@@ -13,7 +13,7 @@ namespace Advent2021
 4846848554
 5283751526";
 
-        public const string INPUT1 = @"5251578181
+        public const string INPUT = @"5251578181
 6158452313
 1818578571
 3844615143
