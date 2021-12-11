@@ -33,3 +33,6 @@ Utils.Result( $"Answer = {new Day9().Answer().ToString()}" );
 
 Utils.Day( 10 );
 Utils.Result( $"Answer = {new Day10().Answer().ToString()}" );
+
+Utils.Day( 11 );
+Utils.Result( $"Answer = {new Day11().Answer().ToString()}" );

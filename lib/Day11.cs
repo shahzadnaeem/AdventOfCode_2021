@@ -1,8 +1,8 @@
 namespace Advent2021
 {
-    class DayN
+    class Day11
     {
-        public class Input
+        class Input
         {
             private string Data { get; set; } = "";
 
@@ -18,13 +18,13 @@ namespace Advent2021
             }
         }
 
-        public DayN()
+        public Day11()
         {
         }
 
         private Input GetInput()
         {
-            return new Input( DayNData.INPUT );
+            return new Input( Day11Data.INPUT );
         }
 
         public ( long, long ) Answer()
@@ -32,7 +32,7 @@ namespace Advent2021
             var input = GetInput();
 
 
-            Console.WriteLine( $"INPUT = ${input}" );
+            Console.WriteLine( $"\nINPUT\n{input}\n" );
 
             // Part 1
             var result1 = ( 0, 0 );
