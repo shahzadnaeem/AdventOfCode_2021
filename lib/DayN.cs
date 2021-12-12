@@ -2,11 +2,11 @@ namespace Advent2021
 {
     class DayN
     {
-        public class Input
+        public class Model
         {
             private string Data { get; set; } = "";
 
-            public Input(string input)
+            public Model(string input)
             {
                 Data = input;
             }
@@ -22,15 +22,14 @@ namespace Advent2021
         {
         }
 
-        private Input GetData()
+        private Model GetModel()
         {
-            return new Input( DayNData.INPUT );
+            return new Model( DayNData.INPUT );
         }
 
         public ( long, long ) Answer()
         {
-            var input = GetData();
-
+            var input = GetModel();
 
             Console.WriteLine( $"INPUT = ${input}" );
 
