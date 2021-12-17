@@ -208,13 +208,13 @@ namespace Advent2021
         {
             var cavern = GetData();
 
-            Console.WriteLine( $"\nINPUT\n\n{cavern}\n" );
+            // Console.WriteLine( $"\nINPUT\n\n{cavern}\n" );
 
             // Part 1
             
             var flashes = cavern.Step();
 
-            Console.WriteLine( $"\nAfter STEP 100\n\n{cavern}\n" );
+            // Console.WriteLine( $"\nAfter STEP 100\n\n{cavern}\n" );
 
             var result1 = ( 0, flashes );
 
@@ -225,7 +225,7 @@ namespace Advent2021
 
             var allFlashStep = cavern.Step( 10000, true );
 
-            Console.WriteLine( $"\nAll Flash STEP {allFlashStep}\n\n{cavern}\n" );
+            // Console.WriteLine( $"\nAll Flash STEP {allFlashStep}\n\n{cavern}\n" );
 
             var result2 = ( 0, allFlashStep );
 

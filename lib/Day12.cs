@@ -246,13 +246,12 @@ namespace Advent2021
         {
             var input = GetModel();
 
-            Console.WriteLine( $"\nINPUT\n\n{input}\n" );
+            // Console.WriteLine( $"\nINPUT\n\n{input}\n" );
 
             var paths = input.FindPaths( START, END );
 
-            paths.Sort();
-
-            Console.WriteLine( $"paths:\n{Utils.ArrayToString(paths.ToArray())}\n" );
+            // paths.Sort();
+            // Console.WriteLine( $"paths:\n{Utils.ArrayToString(paths.ToArray())}\n" );
 
             // Part 1
             var result1 = ( input.NumNodes(), paths.Count );
@@ -264,9 +263,8 @@ namespace Advent2021
 
             paths = input.FindPaths( START, END );
 
-            paths.Sort();
-
-            Console.WriteLine( $"V2 paths:\n{Utils.ArrayToString(paths.ToArray())}\n" );
+            // paths.Sort();
+            // Console.WriteLine( $"V2 paths:\n{Utils.ArrayToString(paths.ToArray())}\n" );
 
             var result2 = ( input.NumNodes(), paths.Count );
 
