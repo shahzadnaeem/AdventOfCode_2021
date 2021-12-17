@@ -5,6 +5,8 @@ namespace Advent2021
         public const string START = "start";
         public const string END = "end";
 
+        public partial class Graph {};
+
         public class Node
         {
             public const int STD_TRAVERSE_COUNT = 1;
@@ -12,19 +14,45 @@ namespace Advent2021
 
             public string Name { get; private set; } = "";
             public bool MultiPath { get; private set; } = false;
-            public bool V2TraverseCount { get; private set; } = false;
             public int TraverseCount { get; private set; } = STD_TRAVERSE_COUNT;
-            public bool Traversed { get { return TraverseCount == 0; } }
+            public bool Traversed {
+                get
+                {
+                    var traversed = false;
+
+                    if ( TraverseCount > 0 ) {
+                        if ( ParentGraph.ExtraTraversalEnabled && IsStdCave() )
+                        {
+                            if ( !ParentGraph.ExtraTraversalAvailable && TraverseCount < V2_TRAVERSE_COUNT )
+                            {
+                                traversed = true;
+                            }
+                        }
+                    } else {
+                        traversed = true;
+                    }
+
+                    return traversed;
+                }
+            }
+
+            private readonly Graph ParentGraph;
 
             public Dictionary<string, Node> Connections { get; private set; } = new Dictionary<string, Node>();
 
-            public Node(string name)
+            public Node(string name, Graph graph)
             {
+                ParentGraph = graph;
+
                 if (name.Length > 0)
                 {
                     Name = name;
                     MultiPath = Char.IsUpper(Name.First());
-                    V2TraverseCount = false;
+
+                    if (graph.ExtraTraversalEnabled && IsStdCave() )
+                    {
+                        TraverseCount = V2_TRAVERSE_COUNT;
+                    }
                 }
                 else
                 {
@@ -58,31 +86,56 @@ namespace Advent2021
                 return connections;
             }
 
-            public void ClearTraversed()
+            private bool IsStdCave()
             {
+                return Name != START && Name != END && ! MultiPath;
+            }
+
+            public bool ClearTraversed()
+            {
+                var extraTraversalAvailable = false;
+
                 TraverseCount ++;
-            }
 
-            public void SetTraversed()
-            {
-                TraverseCount --;
-            }
-
-            public void UseV2TraverseCount()
-            {
-                if ( ! MultiPath && Name != START && Name != END ) {
-                    V2TraverseCount = true;
-                    TraverseCount = V2_TRAVERSE_COUNT;
+                if ( ParentGraph.ExtraTraversalEnabled ) {
+                    if ( IsStdCave() && ( TraverseCount == 1 ) ) {
+                        extraTraversalAvailable = true;
+                    }
                 }
+
+                return extraTraversalAvailable;
+            }
+
+            public bool SetTraversed()
+            {   var extraTraversalAvailable = true;
+
+                if ( TraverseCount > 0 )
+                    TraverseCount --;
+
+                if ( ParentGraph.ExtraTraversalEnabled && ParentGraph.ExtraTraversalAvailable ) {
+                    if ( IsStdCave() && ( TraverseCount == 0 ) ) {
+                        extraTraversalAvailable = false;
+                    }
+                }
+
+                return extraTraversalAvailable;
             }
         }
 
-        public class Graph
+        public partial class Graph
         {
             public Dictionary<string, Node> Nodes { get; private set; } = new Dictionary<string, Node>();
 
-            public Graph()
+            public bool ExtraTraversalEnabled { get; private set; } = false;
+            public bool ExtraTraversalAvailable { get; private set; } = false;
+
+            public Graph( bool extraTraversalEnabled )
             {
+                ExtraTraversalEnabled = extraTraversalEnabled;
+
+                if ( ExtraTraversalEnabled ) {
+                    ExtraTraversalAvailable = true;
+                }
             }
 
             public int NumNodes()
@@ -97,13 +150,13 @@ namespace Advent2021
 
                 if (!Nodes.ContainsKey(a))
                 {
-                    var nodeA = new Node(a);
+                    var nodeA = new Node(a, this);
                     Nodes.Add(a, nodeA);
                 }
 
                 if (!Nodes.ContainsKey(b))
                 {
-                    var nodeB = new Node(b);
+                    var nodeB = new Node(b, this);
                     Nodes.Add(b, nodeB);
                 }
 
@@ -133,18 +186,14 @@ namespace Advent2021
                 return string.Join( '-', path.Select( d => d.Name ) );
             }
 
-            public void UseV2TraverseCount()
-            {
-                foreach (var node in Nodes)
-                {
-                    node.Value.UseV2TraverseCount();
-                }
-            }
-
             private void DoFindPaths( Node from, Node to, LinkedList<Node> path, List<string> paths )
             {
                 path.AddLast( from );
-                from.SetTraversed();
+                var res = from.SetTraversed();
+
+                if ( ExtraTraversalEnabled && ! res ) {
+                    ExtraTraversalAvailable = false;
+                }
 
                 if ( from.Name == to.Name ) {
                     paths.Add( PathToString( path ) );                 
@@ -157,7 +206,12 @@ namespace Advent2021
                     }
                 }
 
-                from.ClearTraversed();
+                res = from.ClearTraversed();
+
+                if ( ExtraTraversalEnabled && res ) {
+                    ExtraTraversalAvailable = true;
+                }
+
                 path.RemoveLast();
             }
 
@@ -175,9 +229,9 @@ namespace Advent2021
             }
         }
 
-        private Graph GetModel()
+        private Graph GetModel( bool extraTraversalEnabled = false )
         {
-            var graph = new Graph();
+            var graph = new Graph( extraTraversalEnabled );
 
             var input = Day12Data.INPUT.Split( Environment.NewLine );
 
@@ -196,6 +250,8 @@ namespace Advent2021
 
             var paths = input.FindPaths( START, END );
 
+            paths.Sort();
+
             Console.WriteLine( $"paths:\n{Utils.ArrayToString(paths.ToArray())}\n" );
 
             // Part 1
@@ -204,10 +260,11 @@ namespace Advent2021
             Console.WriteLine( $"Result1 = {result1}" );
 
             // Part 2
-            input = GetModel();
-            input.UseV2TraverseCount();
+            input = GetModel( true );
 
             paths = input.FindPaths( START, END );
+
+            paths.Sort();
 
             Console.WriteLine( $"V2 paths:\n{Utils.ArrayToString(paths.ToArray())}\n" );
 

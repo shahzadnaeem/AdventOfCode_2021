@@ -2,7 +2,7 @@ namespace Advent2021
 {
     class Day12Data
     {
-        public const string INPUT = @"start-A
+        public const string INPUT0 = @"start-A
 start-b
 A-c
 A-b
@@ -21,7 +21,7 @@ kj-sa
 kj-HN
 kj-dc";
 
-        public const string INPUT1 = @"mx-IQ
+        public const string INPUT = @"mx-IQ
 mx-HO
 xq-start
 start-HO
