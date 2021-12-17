@@ -19,7 +19,7 @@ namespace Advent2021
             {
                 wr.Write( $"{item}" );
                 c--;
-                if ( c > 0 ) wr.Write(',');
+                if ( c > 0 ) wr.WriteLine(',');
             }
 
             wr.Write( " ]" );

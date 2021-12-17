@@ -7,9 +7,15 @@ namespace Advent2021
 
         public class Node
         {
+            public const int STD_TRAVERSE_COUNT = 1;
+            public const int V2_TRAVERSE_COUNT = 2;
+
             public string Name { get; private set; } = "";
             public bool MultiPath { get; private set; } = false;
-            public bool Traversed { get; private set; } = false;
+            public bool V2TraverseCount { get; private set; } = false;
+            public int TraverseCount { get; private set; } = STD_TRAVERSE_COUNT;
+            public bool Traversed { get { return TraverseCount == 0; } }
+
             public Dictionary<string, Node> Connections { get; private set; } = new Dictionary<string, Node>();
 
             public Node(string name)
@@ -18,7 +24,7 @@ namespace Advent2021
                 {
                     Name = name;
                     MultiPath = Char.IsUpper(Name.First());
-                    Traversed = false;
+                    V2TraverseCount = false;
                 }
                 else
                 {
@@ -26,11 +32,47 @@ namespace Advent2021
                 }
             }
 
+            public override string ToString()
+            {
+                return $"name: {Name}, multi: {MultiPath}, traversed: {Traversed}";
+            }
+
             public void AddConnection(Node node)
             {
                 if (!Connections.ContainsKey(node.Name))
                 {
                     Connections.Add(node.Name, node);
+                }
+            }
+
+            public List<Node> GetTraversableConnections()
+            {
+                var connections = new List<Node>();
+
+                foreach( var c in Connections ) {
+                    if ( ! c.Value.Traversed || c.Value.MultiPath ) {
+                        connections.Add( c.Value );
+                    }
+                }
+
+                return connections;
+            }
+
+            public void ClearTraversed()
+            {
+                TraverseCount ++;
+            }
+
+            public void SetTraversed()
+            {
+                TraverseCount --;
+            }
+
+            public void UseV2TraverseCount()
+            {
+                if ( ! MultiPath && Name != START && Name != END ) {
+                    V2TraverseCount = true;
+                    TraverseCount = V2_TRAVERSE_COUNT;
                 }
             }
         }
@@ -41,6 +83,11 @@ namespace Advent2021
 
             public Graph()
             {
+            }
+
+            public int NumNodes()
+            {
+                return Nodes.Count;
             }
 
             public void AddPair(string pair)
@@ -77,8 +124,54 @@ namespace Advent2021
 
                     wr.WriteLine(string.Join(", ", node.Value.Connections.Values.Select( n => n.Name )));
                 }
-
+    
                 return wr.ToString();
+            }
+
+            private string PathToString( LinkedList<Node> path )
+            {
+                return string.Join( '-', path.Select( d => d.Name ) );
+            }
+
+            public void UseV2TraverseCount()
+            {
+                foreach (var node in Nodes)
+                {
+                    node.Value.UseV2TraverseCount();
+                }
+            }
+
+            private void DoFindPaths( Node from, Node to, LinkedList<Node> path, List<string> paths )
+            {
+                path.AddLast( from );
+                from.SetTraversed();
+
+                if ( from.Name == to.Name ) {
+                    paths.Add( PathToString( path ) );                 
+                } else {
+                    var searchNodes = from.GetTraversableConnections();
+
+                    foreach (var next in searchNodes)
+                    {
+                        DoFindPaths( next, to, path, paths );
+                    }
+                }
+
+                from.ClearTraversed();
+                path.RemoveLast();
+            }
+
+            public List<string> FindPaths( string from, string to )
+            {
+                var paths = new List<string>();
+                var path = new LinkedList<Node>();
+
+                var fromNode = Nodes.First( kv => kv.Key == from ).Value;
+                var toNode = Nodes.First( kv => kv.Key == to ).Value;
+
+                DoFindPaths( fromNode, toNode, path, paths );
+
+                return paths;
             }
         }
 
@@ -101,13 +194,24 @@ namespace Advent2021
 
             Console.WriteLine( $"\nINPUT\n\n{input}\n" );
 
+            var paths = input.FindPaths( START, END );
+
+            Console.WriteLine( $"paths:\n{Utils.ArrayToString(paths.ToArray())}\n" );
+
             // Part 1
-            var result1 = ( 0, 0 );
+            var result1 = ( input.NumNodes(), paths.Count );
 
             Console.WriteLine( $"Result1 = {result1}" );
 
             // Part 2
-            var result2 = ( 0, 0 );
+            input = GetModel();
+            input.UseV2TraverseCount();
+
+            paths = input.FindPaths( START, END );
+
+            Console.WriteLine( $"V2 paths:\n{Utils.ArrayToString(paths.ToArray())}\n" );
+
+            var result2 = ( input.NumNodes(), paths.Count );
 
             Console.WriteLine( $"Result2 = {result2}" );
 
