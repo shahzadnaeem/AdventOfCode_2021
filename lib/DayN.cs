@@ -31,7 +31,7 @@ namespace Advent2021
         {
             var input = GetModel();
 
-            Console.WriteLine( $"INPUT = ${input}" );
+            Console.WriteLine( $"INPUT = {input}" );
 
             // Part 1
             var result1 = ( 0, 0 );
